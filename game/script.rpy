@@ -2,16 +2,17 @@
 
 # Declare characters used by this game. The color argument colorizes the
 # name of the character.
-
-define e = Character("Eileen")
+define p = Character("You", color="#A0A0A0")
+define b = Character("Blue", color="#4800FF")
+define r = Character("Red", color="#CD1111")
 
 screen character_map:
     imagemap:
         ground "map_background2.png"
         hover "map_hover2.png"
 
-        hotspot (558, 25, 731 - 558, 190 - 25) clicked Call(story + ".chat1") #blue
-        hotspot (286, 220, 467 - 286, 396 - 220) clicked Call(story + ".chat2") #red
+        hotspot (558, 25, 731 - 558, 190 - 25) clicked Call(story + ".blue") #blue
+        hotspot (286, 220, 467 - 286, 396 - 220) clicked Call(story + ".red") #red
 
 # The game starts here.
 
@@ -25,18 +26,29 @@ label start:
 
 
 ## Aliens ############################################################
+######################################################################
 
 label aliens:
 
 label .start:
 
-    "Green light. Shining metal. The eerie quiet. These are the things I remember"
+    scene bg meadow
 
-    "I found six others but they don't remember much either"
+    show player
 
-    "They're all looking for someone they lost"
+    p "I got called out to a sports stadium because people reported seeing flying saucers, loud noises and people screaming"
 
-    $ chat1options = ["option1", "option2", "option3"]
+    p "There's nothing in the sky now but the place is littered with scorch marked and occasional sprays of blood. Something definitely happened here"
+
+    p "I've managed to gather a group of witnesses but they're all terribly traumatised."
+
+    p "If I can help them find the person they're looking for, maybe I can get some answers to what happened here?"
+
+    hide player
+
+    $ hadBlueIntro = False
+    $ foundTicketStubs = False
+    $ blueOptions = ["option1", "option2", "option3"]
 
     call aliens.map
         
@@ -48,51 +60,111 @@ label .map:
 
     return
 
-label .chat1:
+## Blue ##############################################################
 
-    if len(chat1options) == 0:
-        call aliens.chat1nodialogue
+label .blue:
+
+    if hadBlueIntro == False:
+        call aliens.blueIntro
+        $ hadBlueIntro = True
     else:
-        $ option = renpy.random.choice(chat1options)
-        $ chat1options.remove(option)
+        call aliens.blueContinue
+
+    if len(blueOptions) == 0:
+        call aliens.blueNoDialogue
+    else:
+        $ option = renpy.random.choice(blueOptions)
+        $ blueOptions.remove(option)
 
         if option == "option1":
-            call aliens.chat1option1
+            call aliens.blueOption1
         elif option == "option2":
-            call aliens.chat1option2
+            call aliens.blueOption2
         elif option == "option3":
-            call aliens.chat1option3
+            call aliens.blueOption3
+
+    if foundTicketStubs == False:
+        call aliens.ticketStubs
+        $ foundTicketStubs = True
+
+    hide blue
+
+    hide player
 
     call aliens.map
 
-label .chat1nodialogue:
+label .blueIntro:
 
-    "I can't think of anything more"
+    show player at left
 
-    return
+    show blue at right
 
-label .chat1option1:
+    p "Excuse me sir, I'd like to ask you a few questions if you don't mind?"
 
-    "I am Blue and this is memory 1"
+    b "Huh? Oh. Of course. *distracted* What do you want?"
 
-    return
-
-label .chat1option2:
-
-    "I am Blue and this is memory 2"
+    p "Can you tell me what happened?"
 
     return
 
+label .blueContinue:
 
-label .chat1option3:
+    show player at left
 
-    "I am Blue and this is memory 3"
+    show blue at right
+
+    p "Is there anything else you remember?"
 
     return
 
-label .chat2:
+label .blueNoDialogue:
 
-    "I'm Red and I only have 1 memory"
+    b "I can't think of anything more to tell you."
+
+    return
+
+label .blueOption1:
+
+    b "If I close my eyes I see large silver discs in the sky making a loud humming noise."
+
+    b "Then a bright green light with incredible heat. I remember people screaming and running."
+
+    return
+
+label .blueOption2:
+
+    b "I remember laughing at our team's mascot chasing the other mascot around. It was such a perfect day."
+
+    b "Now I think the world will never be the same again. I don't think I could even crack a smile."
+
+    return
+
+
+label .blueOption3:
+
+    b "I think our team was winning and they were going to send that new player onto the field. I was really excited to see his debut."
+
+    return
+
+label .ticketStubs:
+
+    b "I also found this pair of ticket stubs in my pocket. I must have been in the stands with someone, but I can't remember who."
+
+    return
+
+## Red ###############################################################
+
+label .red:
+
+    show red at left
+
+    show player at right
+
+    r "I'm Red and I only have 1 memory"
+
+    hide red
+
+    hide player
 
     call aliens.map
 
