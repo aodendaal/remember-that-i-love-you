@@ -23,14 +23,14 @@ define gui.show_name = True
 
 ## The version of the game.
 
-define config.version = "1.0"
+define config.version = "1.2"
 
 
 ## Text that is placed on the game's about screen. Place the text between the
 ## triple-quotes, and leave a blank line between paragraphs.
 
 define gui.about = _p("""
-By Andre Odendaal
+By Andre Odendaal, Steven Tu & 
 
 Remember That I Love You is a narrative game about matching people based on their memories; push people’s emotions to clarify what they remember and at the end pair each character with someone they love. Each game is different. Some other worldly event has caused a group of people to lose their memories and you must help them find their friend, partner or lover. Listen as people talk about what they can remember and prompt them for clues of who they should be with by sharing pieces of memory you’ve learnt from others.
 """)
