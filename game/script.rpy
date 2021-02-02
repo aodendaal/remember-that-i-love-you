@@ -2,10 +2,11 @@
 
 # Declare characters used by this game. The color argument colorizes the
 # name of the character.
-define p = Character("You", color="#A0A0A0")
-define b = Character("Blue", color="#4800FF")
-define r = Character("Red", color="#CD1111")
-define o = Character("Orange", color="##FF6A00")
+define playerCharacter = Character("You", color="#A0A0A0")
+define blueCharacter = Character("Blue", color="#4800FF")
+define redCharacter = Character("Red", color="#CD1111")
+define orangeCharacter = Character("Orange", color="##FF6A00")
+define purpleCharacter = Character("Purple", color="##FF6A00")
 
 screen character_map:
     imagemap:
@@ -29,6 +30,48 @@ label start:
 
     return
 
+## Vocals ############################################################
+######################################################################
+
+label vocals:
+
+label .male:
+
+    $ r = renpy.random.randint(0, 5)
+
+    if r == 0:
+        play sound "audio/Vocals/Male/Greetings 1.mp3"
+    elif r == 1:
+        play sound "audio/Vocals/Male/Greetings 2.mp3"
+    elif r == 2:
+        play sound "audio/Vocals/Male/Hello 1.mp3"
+    elif r == 3:
+        play sound "audio/Vocals/Male/Hello 2.mp3"
+    elif r == 4:
+        play sound "audio/Vocals/Male/Howdy 1.mp3"
+    elif r == 5:
+        play sound "audio/Vocals/Male/Hello 2.mp3"
+
+    return
+
+label .female:
+
+    $ r = renpy.random.randint(0, 5)
+
+    if r == 0:
+        play sound "audio/Vocals/Female/Greetings 1.mp3"
+    elif r == 1:
+        play sound "audio/Vocals/Female/Greetings 2.mp3"
+    elif r == 2:
+        play sound "audio/Vocals/Female/Greetings 3.mp3"
+    elif r == 3:
+        play sound "audio/Vocals/Female/Hello 1.mp3"
+    elif r == 4:
+        play sound "audio/Vocals/Female/Hello 2.mp3"
+    elif r == 5:
+        play sound "audio/Vocals/Female/Hello 3.mp3"
+
+    return
 
 ## Aliens ############################################################
 ######################################################################
@@ -37,21 +80,21 @@ label aliens:
 
 label .start:
 
+    play music "audio/Far Out Mann_final_standard.mp3"
+
     scene bg stadium day
 
-    show player
+    show fbi1
 
-        play sound "audio/vocals/male/Hello 1.wav"
+    playerCharacter "I got called out to a sports stadium because people reported seeing flying saucers, loud noises and people screaming"
 
-    p "I got called out to a sports stadium because people reported seeing flying saucers, loud noises and people screaming"
+    playerCharacter "There's nothing in the sky now but the place is littered with scorch marked and occasional sprays of blood. Something definitely happened here"
 
-    p "There's nothing in the sky now but the place is littered with scorch marked and occasional sprays of blood. Something definitely happened here"
+    playerCharacter "I've managed to gather a group of witnesses but they're all terribly traumatised."
 
-    p "I've managed to gather a group of witnesses but they're all terribly traumatised."
+    playerCharacter "If I can help them find the person they're looking for, maybe I can get some answers to what happened here?"
 
-    p "If I can help them find the person they're looking for, maybe I can get some answers to what happened here?"
-
-    hide player
+    hide fbi1
 
     ## Blue Initialization
     $ hadBlueIntro = False
@@ -67,6 +110,18 @@ label .start:
     $ hadOrangeIntro = False
     $ orangeOptions = []
 
+    ## Purple Initialization
+    $ hadPurpleIntro = False
+    $ purpleOptions = []
+
+    ## Green Initialization
+    $ hadGreenIntro = False
+    $ greenOptions = []
+
+    ## Pink Initialization
+    $ hadPinkIntro = False
+    $ pinkOptions = []
+
     call aliens.map from _call_aliens_map
         
     return
@@ -81,7 +136,7 @@ label .map:
 
 label .blue:
 
-    play sound "audio/vocals/male/Hello 1.wav"
+    call vocals.male
 
     if hadBlueIntro == False:
         call aliens.blueIntro from _call_aliens_blueIntro
@@ -108,72 +163,74 @@ label .blue:
 
     hide blue
 
-    hide player
+    hide fbi1
 
     call aliens.map from _call_aliens_map_1
 
 label .blueIntro:
 
-    show player at left
+    show fbi1 at left
 
     show blue at right
 
-    p "Excuse me sir, I'd like to ask you a few questions if you don't mind?"
+    playerCharacter "Excuse me sir, I'd like to ask you a few questions if you don't mind?"
 
-    b "Huh? Oh. Of course. *distracted* What do you want?"
+    blueCharacter "Huh? Oh. Of course. *distracted* What do you want?"
 
-    p "Can you tell me what happened?"
+    playerCharacter "Can you tell me what happened?"
 
     return
 
 label .blueContinue:
 
-    show player at left
+    show fbi1 at left
 
     show blue at right
 
-    p "Is there anything else you remember?"
+    playerCharacter "Is there anything else you remember?"
 
     return
 
 label .blueNoDialogue:
 
-    b "I can't think of anything more to tell you."
+    blueCharacter "I can't think of anything more to tell you."
 
     return
 
 label .blueOption1:
 
-    b "If I close my eyes I see large silver discs in the sky making a loud humming noise."
+    blueCharacter "If I close my eyes I see large silver discs in the sky making a loud humming noise."
 
-    b "Then a bright green light with incredible heat. I remember people screaming and running."
+    blueCharacter "Then a bright green light with incredible heat. I remember people screaming and running."
 
     return
 
 label .blueOption2:
 
-    b "I remember laughing at our team's mascot chasing the other mascot around. It was such a perfect day."
+    blueCharacter "I remember laughing at our team's mascot chasing the other mascot around. It was such a perfect day."
 
-    b "Now I think the world will never be the same again. I don't think I could even crack a smile."
+    blueCharacter "Now I think the world will never be the same again. I don't think I could even crack a smile."
 
     return
 
 
 label .blueOption3:
 
-    b "I think our team was winning and they were going to send that new player onto the field. I was really excited to see his debut."
+    blueCharacter "I think our team was winning and they were going to send that new player onto the field. I was really excited to see his debut."
 
     return
 
 label .blueTicketStubs:
 
-    b "I also found this pair of ticket stubs in my pocket. I must have been in the stands with someone, but I can't remember who."
+    blueCharacter "I also found this pair of ticket stubs in my pocket. I must have been in the stands with someone, but I can't remember who."
 
     return
 
 ## Red ###############################################################
 
 label .red:
+
+    call vocals.female
 
     if hadRedIntro == False:
         call aliens.redIntro
@@ -200,75 +257,77 @@ label .red:
 
     hide red
 
-    hide player
+    hide fbi1
 
     call aliens.map
 
 label .redIntro:
 
-    show player at left
+    show fbi1 at left
 
     show red at right
 
-    p "Excuse me mam, can you tell me what you saw?"
+    playerCharacter "Excuse me mam, can you tell me what you saw?"
 
-    r "It was so horrifying, I think I blacked out."
+    redCharacter "It was so horrifying, I think I blacked out."
 
-    p "Please can you try and tell me what you can remember?"
+    playerCharacter "Please can you try and tell me what you can remember?"
 
     return
 
 label .redContinue:
 
-    show player at left
+    show fbi1 at left
 
     show red at right
 
-    p "Can you tell me anything else you remember?"
+    playerCharacter "Can you tell me anything else you remember?"
 
-    r "Um..."
+    redCharacter "Um..."
 
     return
 
 label .redNoDialogue:
 
-    hide player
+    hide fbi1
 
     show red at center
 
-    r "Please. Don't ask me any more questions. I don't want to remember."
+    redCharacter "Please. Don't ask me any more questions. I don't want to remember."
 
     return
 
 label .redHotdog:
 
-    r "I remember sharing a hotdog with someone. The day was perfect. I think we were in love."
+    redCharacter "I remember sharing a hotdog with someone. The day was perfect. I think we were in love."
 
-    p "I'm sorry to hear that"
+    playerCharacter "I'm sorry to hear that"
 
-    r "Please! You have to help me find them *sobs*"
+    redCharacter "Please! You have to help me find them *sobs*"
 
     return
 
 label .redOption1:
 
-    r "We were watching the game when suddenly it went dark. Then there was a blinding light."
+    redCharacter "We were watching the game when suddenly it went dark. Then there was a blinding light."
 
-    r "I remember screaming and crying"
+    redCharacter "I remember screaming and crying"
 
     return
 
 label .redOption2:
 
-    r "We were watching the game when suddenly it went dark. Then there was a blinding light."
+    redCharacter "We were watching the game when suddenly it went dark. Then there was a blinding light."
 
-    r "I remember screaming and crying"
+    redCharacter "I remember screaming and crying"
 
     return
 
 ## Orange ############################################################
 
 label .orange:
+
+    call vocals.male
 
     if hadOrangeIntro == False:
         call aliens.orangeIntro
@@ -291,115 +350,106 @@ label .orange:
 
     hide orange
 
-    hide player
+    hide fbi1
 
     call aliens.map 
 
 label .orangeIntro:
 
-    show player at left
+    show fbi1 at left
 
     show orange at right
 
-    p "Excuse me mam, can you tell me what you saw?"
+    playerCharacter "Excuse me sir, can you tell me what you saw?"
 
-    r "It was so horrifying, I think I blacked out."
+    redCharacter "It was so horrifying, I think I blacked out."
 
-    p "Please can you try and tell me what you can remember?"
+    playerCharacter "Please can you try and tell me what you can remember?"
 
     return
 
 label .orangeContinue:
 
-    show player at left
+    show fbi1 at left
 
     show orange at right
 
-    p "Can you tell me anything else you remember?"
-
-    r "Um..."
+    playerCharacter "Can you tell me anything else you remember?"
 
     return
 
 label .orangeNoDialogue:
 
-    hide player
+    hide fbi1
 
     show orange at center
 
-    r "Please. Don't ask me any more questions. I don't want to remember."
+    orangeCharacter "I can't think of anything else"
 
     return
 
-## Kaiju #############################################################
-######################################################################
+## Purple ############################################################
 
-label kaiju:
+label .purple:
 
-label .start:
+    call vocals.male
 
-    "This is the start of the kaiju story"
+    if hadPurpleIntro == False:
+        call aliens.purpleIntro
+        $ hadPurpleIntro = True
+    else:
+        call aliens.purpleContinue
 
-    call screen character_map
+    if len(purpleOptions) == 0:
+        call aliens.purpleNoDialogue
+    else:
+        $ option = renpy.random.choice(purpleOptions)
+        $ purpleOptions.remove(option)
 
-    return
+        if option == "option1":
+            call aliens.purpleOption1
+        elif option == "option2":
+            call aliens.purpleOption2
+        elif option == "option3":
+            call aliens.purpleOption3
 
-label .chat:
+    hide purple
 
-    "This is kaiju chat"
+    hide fbi1
 
-    return
+    call aliens.map 
 
-label .chat2:
+label .purpleIntro:
 
-    "This is kaiju chat 2"
+    show fbi1 at left
 
-    return
+    show purple at right
 
-## Wizard ############################################################
+    playerCharacter "Excuse me sir, can you tell me what you saw?"
 
-label wizard:
+    purpleCharacter "It was so horrifying, I think I blacked out."
 
-label .start:
-
-    "This is the start of the wizard story"
-
-    call screen character_map
-
-    return
-
-label .chat:
-
-    "This is wizard chat"
-
-    return
-
-label .chat2:
-
-    "This is wizard chat 2"
+    playerCharacter "Please can you try and tell me what you can remember?"
 
     return
 
-## Demons ############################################################
+label .purpleContinue:
 
-label demons:
+    show fbi1 at left
 
-label .start:
+    show purple at right
 
-    "This is the start of the demons story"
-
-    call screen character_map
+    playerCharacter "Can you tell me anything else you remember?"
 
     return
 
-label .chat:
+label .purpleNoDialogue:
 
-    "This is demons chat"
+    hide fbi1
 
-    return
+    show purple at center
 
-label .chat2:
-
-    "This is demons chat 2"
+    purpleCharacter "I can't think of anything else"
 
     return
+    
