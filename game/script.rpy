@@ -5,8 +5,10 @@
 define playerCharacter = Character("You", color="#A0A0A0")
 define blueCharacter = Character("Blue", color="#4800FF")
 define redCharacter = Character("Red", color="#CD1111")
-define orangeCharacter = Character("Orange", color="##FF6A00")
-define purpleCharacter = Character("Purple", color="##FF6A00")
+define orangeCharacter = Character("Orange", color="#FF6A00")
+define purpleCharacter = Character("Purple", color="#CC74F3")
+define greenCharacter = Character("Green", color="#74F385")
+define pinkCharacter = Character("Pink", color="#F374E1")
 
 screen character_map:
     imagemap:
@@ -15,10 +17,10 @@ screen character_map:
 
         hotspot (314, 154, 466 - 314, 291 - 154) clicked Call(story + ".blue") #blue
         hotspot (509, 112, 661 - 509, 260 - 112) clicked Call(story + ".red") #red
-        hotspot (317, 332, 471 - 317, 468 - 332) clicked Call(story + ".red") #green
-        hotspot (527, 281, 679 - 527, 433 - 281) clicked Call(story + ".red") #purple
+        hotspot (317, 332, 471 - 317, 468 - 332) clicked Call(story + ".green") #green
+        hotspot (527, 281, 679 - 527, 433 - 281) clicked Call(story + ".purple") #purple
         hotspot (331, 486, 495 - 331, 652 - 486) clicked Call(story + ".orange") #orange
-        hotspot (532, 460, 679 - 532, 597 - 460) clicked Call(story + ".red") #pink
+        hotspot (532, 460, 679 - 532, 597 - 460) clicked Call(story + ".pink") #pink
 
 # The game starts here.
 
@@ -139,13 +141,13 @@ label .blue:
     call vocals.male
 
     if hadBlueIntro == False:
-        call aliens.blueIntro from _call_aliens_blueIntro
+        call aliens.blueIntro
         $ hadBlueIntro = True
     else:
-        call aliens.blueContinue from _call_aliens_blueContinue
+        call aliens.blueContinue
 
     if len(blueOptions) == 0:
-        call aliens.blueNoDialogue from _call_aliens_blueNoDialogue
+        call aliens.blueNoDialogue
     else:
         $ option = renpy.random.choice(blueOptions)
         $ blueOptions.remove(option)
@@ -362,7 +364,7 @@ label .orangeIntro:
 
     playerCharacter "Excuse me sir, can you tell me what you saw?"
 
-    redCharacter "It was so horrifying, I think I blacked out."
+    orangeCharacter "It was so horrifying, I think I blacked out."
 
     playerCharacter "Please can you try and tell me what you can remember?"
 
@@ -452,4 +454,133 @@ label .purpleNoDialogue:
     purpleCharacter "I can't think of anything else"
 
     return
-    
+
+## Green #############################################################
+
+label .green:
+
+    call vocals.female
+
+    if hadGreenIntro == False:
+        call aliens.greenIntro
+        $ hadGreenIntro = True
+    else:
+        call sliens.greenContinue
+
+    if len(greenOptions) == 0:
+        call aliens.greenNoDialogue
+    else:
+        $ option = renpy.random.choice(greenOptions)
+        $ greenOptions.remove(option)
+
+        if option == "option1":
+            call aliens.greenOption1
+        elif option == "option2":
+            call aliens.greenOption2
+        elif option == "option3":
+            call aliens.greenOption3
+
+    hide green
+
+    hide fbi1
+
+    call aliens.map 
+
+label .greenIntro:
+
+    show fbi1 at left
+
+    show green at right
+
+    playerCharacter "Excuse me mam, can you tell me what you saw?"
+
+    greenCharacter "It was so horrifying, I think I blacked out."
+
+    greenCharacter "Please can you try and tell me what you can remember?"
+
+    return
+
+label .greenContinue:
+
+    show fbi1 at left
+
+    show green at right
+
+    greenCharacter "Can you tell me anything else you remember?"
+
+    return
+
+label .greenNoDialogue:
+
+    hide fbi1
+
+    show green at center
+
+    greenCharacter "I can't think of anything else"
+
+    return
+
+## Pink ##############################################################
+
+label .pink:
+
+    call vocals.female
+
+    if hadPinkIntro == False:
+        call aliens.pinkIntro
+        $ hadPinkIntro = True
+    else:
+        call aliens.pinkContinue
+
+    if len(pinkOptions) == 0:
+        call aliens.pinkNoDialogue
+    else:
+        $ option = renpy.random.choice(pinkOptions)
+        $ pinkOptions.remove(option)
+
+        if option == "option1":
+            call aliens.pinkOption1
+        elif option == "option2":
+            call aliens.pinkOption2
+        elif option == "option3":
+            call aliens.pinkOption3
+
+    hide pink
+
+    hide fbi1
+
+    call aliens.map 
+
+label .pinkIntro:
+
+    show fbi1 at left
+
+    show pink at right
+
+    playerCharacter "Excuse me mam, can you tell me what you saw?"
+
+    pinkCharacter "It was so horrifying, I think I blacked out."
+
+    pinkCharacter "Please can you try and tell me what you can remember?"
+
+    return
+
+label .pinkContinue:
+
+    show fbi1 at left
+
+    show pink at right
+
+    pinkCharacter "Can you tell me anything else you remember?"
+
+    return
+
+label .pinkNoDialogue:
+
+    hide fbi1
+
+    show pink at center
+
+    pinkCharacter "I can't think of anything else"
+
+    return
